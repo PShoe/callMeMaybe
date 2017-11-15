@@ -1,6 +1,7 @@
 import React from 'react'
-import Nytsearch from './Nytsearch'
-import City from './City'
+import Usa from './Usa'
+import Aus from './Aus'
+
 
 
 class App extends React.Component {
@@ -10,8 +11,9 @@ class App extends React.Component {
   }
 
   render() {
-    return <div>
-      <City />
+    return <div class="container">
+      <Aus class="city"/>
+      <Usa class="city"/>
     </div>
   }
 
