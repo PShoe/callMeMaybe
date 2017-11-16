@@ -46,7 +46,7 @@ export default class World extends React.Component {
     let { quote, author, stories } = this.state
 
     return(
-      <div>
+      <div className="world">
         <h1>Everything between</h1>
         <p>{ quote }</p>
         <p>{ author }</p>

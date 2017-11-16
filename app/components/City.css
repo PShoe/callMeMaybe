@@ -1,9 +1,23 @@
 .awake {
-  background-color: yellow;
+  background: red;
+  background: -webkit-linear-gradient(red, white);
 }
 .sleep {
-  background-color: blue;
+  background: red;
+  background: -webkit-linear-gradient(blue, white);
 }
 ul{
   list-style-type: none;
+}
+h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  text-align: center;
+}
+p, li, span {
+  font-family: 'Barlow', sans-serif;
+  padding: 5px;
+}
+.world {
+  background: yellow;
+  background: -webkit-linear-gradient(yellow, white);
 }

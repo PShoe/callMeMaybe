@@ -92,8 +92,7 @@ export default class Usa extends React.Component {
       <div className={ this.handleAwake() }>
         <h1>Philadelphia</h1>
         <span>{ current_time }</span>
-        <p>{ Math.round(USweather_temp.temp) } °F</p>
-        <p>{ toCelcius(USweather_temp.temp) } °C</p>
+        <p>{ Math.round(USweather_temp.temp) } °F / { toCelcius(USweather_temp.temp) } °C</p>
         <ul>
           { USNews.map(function(item,index){
             return<li key={index}>{item.title}</li>
