@@ -47,7 +47,7 @@ export default class World extends React.Component {
 
     return(
       <div className="world">
-        <h1>Everything between</h1>
+        <h1>Everything inbetween</h1>
         <p>{ quote }</p>
         <p>{ author }</p>
         <ul>

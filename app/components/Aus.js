@@ -51,11 +51,12 @@ export default class Aus extends React.Component {
   }
 
   calculateTimeAvailable(){
-    let format = 'hh:mm:ss',
-    now = moment().tz('Australia/Sydney').format(),
+    let format = 'HH:mm:ss',
+    now = moment().tz('Australia/Sydney').format(format),
     time = moment(now,format),
-    sleep = moment('23:00:00', format),
-    wakeup= moment('09:00:00', format)
+    sleep = moment('23:00:00', format).tz('Australia/Sydney'),
+    wakeup= moment('09:00:00', format).tz('Australia/Sydney')
+
 
     if (time.isBetween(wakeup, sleep)) {
       var awake = true
@@ -89,7 +90,7 @@ export default class Aus extends React.Component {
     return(
       <div className={ this.handleAwake() }>
         <h1>Melbourne</h1>
-        <span>{ current_time }</span>
+        <p>{ current_time }</p>
         <p>{ Math.round(AUweather_temp.temp) } °F / { toCelcius(AUweather_temp.temp) } °C</p>
         <ul>
           { AUNews.map(function(item,index){

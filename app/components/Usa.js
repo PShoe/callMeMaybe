@@ -51,13 +51,13 @@ export default class Usa extends React.Component {
   }
 
   calculateTimeAvailable(){
-    let format = 'hh:mm:ss',
-    now = moment().tz('America/New_York').format(),
-    time = moment(now,format)
-    let sleep = moment('23:00:00').tz('America/New_York')
-    sleep = (sleep, format)
-    let wakeup = moment('09:00:00').tz('America/New_York')
-    wakeup = (wakeup, format)
+    let format = 'HH:mm:ss'
+    let now = moment().tz('America/New_York').format(format)
+    let time = moment(now, format)
+    let sleep = moment('23:00:00', format)
+    sleep = sleep.tz('America/New_York')
+    let wakeup= moment('09:00:00', format)
+    wakeup = wakeup.tz('America/New_York')
 
     if (time.isBetween(wakeup, sleep)) {
       var awake = true
@@ -85,13 +85,13 @@ export default class Usa extends React.Component {
       var temp = ((num - 32) * (5/9))
       return Math.round(temp)
     }
-    setTimeout(this.clockUpdate, 1000)
-    setTimeout(this.calculateTimeAvailable, 1000)
+    setTimeout(this.clockUpdate, 6000)
+    setTimeout(this.calculateTimeAvailable, 6000)
 
     return(
       <div className={ this.handleAwake() }>
         <h1>Philadelphia</h1>
-        <span>{ current_time }</span>
+        <p>{ current_time }</p>
         <p>{ Math.round(USweather_temp.temp) } °F / { toCelcius(USweather_temp.temp) } °C</p>
         <ul>
           { USNews.map(function(item,index){

@@ -15,7 +15,7 @@ class App extends React.Component {
     return <div className="container">
       <Aus className="city"/>
       <World className="city"/>
-      <Usa lassName="city"/>
+      <Usa className="city"/>
     </div>
   }
 }
