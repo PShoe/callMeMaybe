@@ -1,6 +1,7 @@
 import React from 'react'
-import Usa from './Usa'
+import World from './World'
 import Aus from './Aus'
+import Usa from './Usa'
 
 
 
@@ -11,12 +12,12 @@ class App extends React.Component {
   }
 
   render() {
-    return <div class="container">
-      <Aus class="city"/>
-      <Usa class="city"/>
+    return <div className="container">
+      <Aus />
+      <World />
+      <Usa />
     </div>
   }
-
 }
 
 module.exports = App

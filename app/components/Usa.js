@@ -2,16 +2,23 @@ import React from 'react'
 import moment from 'moment'
 import tz from 'moment-timezone'
 import _ from 'underscore'
+import './City.css'
 
 
-export default class City extends React.Component {
+export default class Usa extends React.Component {
 
   constructor(props) {
     super(props)
+    this.clockUpdate = this.clockUpdate.bind(this)
+    this.calculateTimeAvailable = this.calculateTimeAvailable.bind(this)
+    this.handleAwake = this.handleAwake.bind(this)
+
     this.state = {
       USNews: [],
       USweather: [],
-      USweather_temp: []
+      USweather_temp: [],
+      current_time: '',
+      awake: false
     }
   }
 
@@ -36,28 +43,61 @@ export default class City extends React.Component {
       })
     }
 
-  render() {
-    const { USNews, USweather, USweather_temp } = this.state
-    const toCelcius = function(num){
-      return (num - 32) * (5/9)
+  clockUpdate() {
+    this.setState({
+      current_time: moment().tz('America/New_York').format('MMMM Do YYYY, h:mm:ss a')
+    })
+  }
+
+  calculateTimeAvailable(){
+    let format = 'hh:mm:ss',
+    now = moment().tz('America/New_York').format(),
+    time = moment(now,format)
+    let sleep = moment('23:00:00').tz('America/New_York')
+    sleep = (sleep, format)
+    let wakeup = moment('09:00:00').tz('America/New_York')
+    wakeup = (wakeup, format)
+    console.log(time)
+
+    if (time.isBetween(wakeup, sleep)) {
+      var awake = true
+    } else {
+      var awake = false
     }
+    this.setState({
+      awake: awake
+    })
+  }
 
-    let timeHere = moment()
-    let timeThere = moment.tz(timeHere, 'America/New_York').format('MMMM Do YYYY, h:mm a')
-    timeHere = moment().format('MMMM Do YYYY, h:mm a')
+  handleAwake() {
+    if(this.state.awake) {
+      var className = 'awake'
+    } else {
+      var className = 'sleep'
+    }
+    return className
+  }
 
-    console.log(this.state)
+  render() {
+    const { USNews, USweather, USweather_temp, current_time, awake } = this.state
+
+    const toCelcius = function(num){
+      var temp = ((num - 32) * (5/9))
+      return Math.round(temp)
+    }
+    setTimeout(this.clockUpdate, 1000)
+    setTimeout(this.calculateTimeAvailable, 1000)
 
     return(
-      <div>
+      <div className={ this.handleAwake() }>
         <h1>Philadelphia</h1>
-        <h3>{ timeThere }</h3>
-        <p>{ USweather_temp.temp } °F</p>
+        <span>{ current_time }</span>
+        <p>{ Math.round(USweather_temp.temp) } °F</p>
         <p>{ toCelcius(USweather_temp.temp) } °C</p>
         <ul>
           { USNews.map(function(item,index){
             return<li key={index}>{item.title}</li>
-          }) }
+          })}
         </ul>
       </div>
     )

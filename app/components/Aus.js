@@ -2,16 +2,24 @@ import React from 'react'
 import moment from 'moment'
 import tz from 'moment-timezone'
 import _ from 'underscore'
+import './City.css'
 
 
-export default class City extends React.Component {
+
+export default class Aus extends React.Component {
 
   constructor(props) {
     super(props)
+    this.clockUpdate = this.clockUpdate.bind(this)
+    this.calculateTimeAvailable = this.calculateTimeAvailable.bind(this)
+    this.handleAwake = this.handleAwake.bind(this)
+
     this.state = {
       AUNews: [],
       AUweather: [],
-      AUweather_temp: []
+      AUweather_temp: [],
+      current_time: '',
+      awake: false
     }
   }
 
@@ -33,28 +41,60 @@ export default class City extends React.Component {
           AUNews: res.articles
         })
       })
+  }
+
+  clockUpdate() {
+    this.setState({
+      current_time: moment().tz('Australia/Sydney').format('MMMM Do YYYY, h:mm:ss a')
+    })
+  }
+
+  calculateTimeAvailable(){
+    let format = 'hh:mm:ss',
+    now = moment().tz('Australia/Sydney').format(),
+    time = moment(now,format),
+    sleep = moment('23:00:00', format),
+    wakeup= moment('09:00:00', format)
+    
+    if (time.isBetween(wakeup, sleep)) {
+      var awake = true
+    } else {
+      var awake = false
     }
+    this.setState({
+      awake: awake
+    })
+  }
+
+  handleAwake() {
+    if(this.state.awake) {
+      var className = 'awake'
+    } else {
+      var className = 'sleep'
+    }
+    return className
+  }
 
   render() {
-    const { AUweather, AUweather_temp, AUNews } = this.state
+    const { AUweather, AUweather_temp, AUNews, current_time, awake } = this.state
+
     const toCelcius = function(num){
-      return (num - 32) * (5/9)
+      var temp = ((num - 32) * (5/9))
+      return Math.round(temp)
     }
-
-    let timeHere = moment().format('MMMM Do YYYY, h:mm a')
-
-    console.log(this.state)
+    setTimeout(this.clockUpdate, 1000)
+    setTimeout(this.calculateTimeAvailable, 1000)
 
     return(
-      <div>
+      <div className={ this.handleAwake() }>
         <h1>Melbourne</h1>
-        <h3>{ timeHere }</h3>
-        <p>{ AUweather_temp.temp } °F</p>
-        <p>{ toCelcius(AUweather_temp.temp)} °C</p>
+        <span>{ current_time }</span>
+        <p>{ Math.round(AUweather_temp.temp) } °F</p>
+        <p>{ toCelcius(AUweather_temp.temp) } °C</p>
         <ul>
           { AUNews.map(function(item,index){
-            return<li key={index}>{item.title}</li>
-          }) }
+            return<li key={ index }>{ item.title }</li>
+          })}
         </ul>
       </div>
     )
