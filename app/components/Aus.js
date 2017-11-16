@@ -3,6 +3,7 @@ import moment from 'moment'
 import tz from 'moment-timezone'
 import _ from 'underscore'
 import './City.css'
+import './normalize.css'
 
 
 
@@ -38,7 +39,7 @@ export default class Aus extends React.Component {
       .then(res => res.json())
       .then(res => {
         this.setState({
-          AUNews: res.articles
+          AUNews: res.articles.slice(0,10)
         })
       })
   }
@@ -55,7 +56,7 @@ export default class Aus extends React.Component {
     time = moment(now,format),
     sleep = moment('23:00:00', format),
     wakeup= moment('09:00:00', format)
-    
+
     if (time.isBetween(wakeup, sleep)) {
       var awake = true
     } else {

@@ -3,6 +3,7 @@ import moment from 'moment'
 import tz from 'moment-timezone'
 import _ from 'underscore'
 import './City.css'
+import './normalize.css'
 
 
 export default class Usa extends React.Component {
@@ -23,12 +24,12 @@ export default class Usa extends React.Component {
   }
 
   componentDidMount() {
-    const USNews = "https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&apiKey=42ad938126bc45518d45c5f17896c78c&language=en"
+    const USNews = "https://api.nytimes.com/svc/topstories/v2/national.json?api-key=93b9276df11d46f5a5ceee40b41ac7fb"
     fetch(USNews)
       .then(res => res.json())
       .then(res => {
         this.setState({
-          USNews: res.articles
+          USNews: res.results.slice(0,10)
         })
       })
 
@@ -57,7 +58,6 @@ export default class Usa extends React.Component {
     sleep = (sleep, format)
     let wakeup = moment('09:00:00').tz('America/New_York')
     wakeup = (wakeup, format)
-    console.log(time)
 
     if (time.isBetween(wakeup, sleep)) {
       var awake = true
