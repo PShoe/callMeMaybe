@@ -47,9 +47,11 @@ export default class World extends React.Component {
 
     return(
       <div className="world">
+        <div className="quote">
         <h1>Everything inbetween</h1>
-        <p>{ quote }</p>
-        <p>{ author }</p>
+          <p>{ quote }</p>
+          <p>{ author }</p>
+        </div>
         <ul>
           { stories.map(function(story, index) {
             let subsection = story.subsection
