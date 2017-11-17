@@ -50,6 +50,7 @@ li {
   background: rgba(0,0,0,.5);
   margin-bottom: 10px;;
   float: left;
+  width: 100%;
 }
 .quote p {
   color: white;
